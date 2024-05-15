@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import br.org.serratec.editora.dto.LivroDto;
 import br.org.serratec.editora.service.LivroService;
@@ -27,6 +28,21 @@ public class LivroController {
 	@GetMapping
 	public ResponseEntity<List<LivroDto>> obterTodos(){
 		return ResponseEntity.ok(livroService.obterTodos());
+	}
+	
+	@GetMapping("/titulo")
+	public ResponseEntity<List<LivroDto>> obterPorInicioTitulo(@RequestBody String inicioDoTitulo){
+		return ResponseEntity.ok(livroService.obterPorInicioTitulo(inicioDoTitulo));
+	}
+	
+	@GetMapping("/autor")
+	public ResponseEntity<List<LivroDto>> obterPorFinalAutor(@RequestBody String fimDoAutor){
+		return ResponseEntity.ok(livroService.obterPorFinalAutor(fimDoAutor));
+	}
+	
+	@GetMapping("/autor-e-titulo")
+	public ResponseEntity<List<LivroDto>> buscarAutor(@RequestParam String autor, @RequestParam String titulo){
+		return ResponseEntity.ok(livroService.obterPorAutoreTitulo(autor, titulo));
 	}
 	
 	@PostMapping

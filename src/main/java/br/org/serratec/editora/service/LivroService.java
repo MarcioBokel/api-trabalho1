@@ -24,6 +24,33 @@ public class LivroService {
 		return livros;
 	}
 	
+	public List<LivroDto> obterPorInicioTitulo(String inicioDoTitulo){
+		List<LivroDto> livros = new ArrayList<>();
+		livroRepository.findByTituloStartingWith(inicioDoTitulo).forEach(livro -> {
+			livros.add(livro.toDto());
+			
+		});
+		return livros;
+	}
+	
+	public List<LivroDto> obterPorFinalAutor(String finalDoAutor){
+		List<LivroDto> livros = new ArrayList<>();
+		livroRepository.findByAutorEndingWith(finalDoAutor).forEach(livro -> {
+			livros.add(livro.toDto());
+			
+		});
+		return livros;
+	}
+	
+	public List<LivroDto> obterPorAutoreTitulo(String buscaAutor, String buscaTitulo){
+		List<LivroDto> livros = new ArrayList<>();
+		livroRepository.findByAutorAndTitulo(buscaAutor, buscaTitulo).forEach(livro -> {
+			livros.add(livro.toDto());
+			
+		});
+		return livros;
+	}
+	
 	public LivroDto salvarLivro(LivroDto novoLivro) {
 		// Aqui aconteceriam outras validações de conteúdo
 		Livro livroSalvo = livroRepository.save(novoLivro.toEntity());
@@ -51,6 +78,8 @@ public class LivroService {
         return Optional.empty();
     }
 	
+	
+	
 	public boolean excluirLivro(Long id) {
 		if(livroRepository.existsById(id)){
 			livroRepository.deleteById(id);
@@ -59,4 +88,5 @@ public class LivroService {
 		
 		return false;
 	}
+	
 }
